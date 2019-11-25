@@ -28,4 +28,4 @@ Terraform IaaC ECR and ECS Creation
 * terraform destroy (for deletion) **
 
 **NOTE:**
-For ECS got terraform-ecs-fargate/terraform and run terraform apply or destroy as needed.
+For ECS goto terraform-ecs-fargate/terraform and run terraform apply or destroy as needed.
