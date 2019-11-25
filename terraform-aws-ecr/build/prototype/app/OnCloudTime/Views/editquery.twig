@@ -1,0 +1,42 @@
+<form id="createQuery">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{{query.id}}" />
+                <label class="control-label">Title <star>*</star></label>
+                <input class="form-control" type="text" name="title" value="{{query.title}}" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Type <star>*</star></label>
+                <select required name="type" class="form-control">
+                    <option value="">----</option>
+                    <option {% if(query.category) == 'athena' %}
+                     selected = "selected"
+                     {% endif %}
+                    value="athena">Athena</option>
+                    <option {% if(query.category) == 'hive' %}
+                     selected = "selected"
+                     {% endif %} value="hive">Hive</option>
+                    <option {% if(query.category) == 'spark' %}
+                     selected = "selected"
+                     {% endif %}   value="spark">Spark</option>
+                     <option {% if(query.category) == 'DynamoDB' %}
+                     selected = "selected"
+                     {% endif %} value="DynamoDB">DynamoDB</option>
+                    <option {% if(query.category) == 'other' %}
+                     selected = "selected"
+                     {% endif %} value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">S3 bucket<star>*</star></label>
+                <input class="form-control" type="text" name="bucket" value="{{query.bucket}}" required />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Description <star>*</star></label>
+                <textarea required class="form-control" rows="3" name="description">{{query.description}}</textarea>
+            </div>
+            <div class="form-group">
+                <label required class="control-label">Report Code <star>*</star></label>
+                <textarea class="form-control" rows="3" name="querystring">{{query.querystring}}</textarea>
+            </div>
+            <div class="category"><star>*</star> Required fields</div>
+            <form>

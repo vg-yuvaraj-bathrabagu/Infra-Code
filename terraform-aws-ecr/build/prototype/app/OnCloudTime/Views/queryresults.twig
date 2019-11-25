@@ -1,0 +1,20 @@
+{% if error is defined %}
+    {{error.value}}
+{% endif %}
+{% if Rows is defined %}
+<table class="table header-fixed">
+    <tbody>
+        {% set increment = 0 %}
+        {% for row in Rows %}
+            <tr>
+            {% for data in row.Data %}
+                {% set increment = increment + 1 %}
+                <td>
+                    {{ data.VarCharValue }}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}

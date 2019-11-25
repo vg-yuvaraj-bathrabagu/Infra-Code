@@ -1,0 +1,279 @@
+{{ include('header.twig') }}
+    <div class="wrapper">
+    {{ include('sidebar.twig') }}
+
+        <div class="main-panel">
+            {{ include('top-nav.twig') }}
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                            <div class="card-content">
+                              {{ include('search.twig') }}
+                              <div class="pull-right">
+                                <div class="row text-center">
+                                    <a class="icon-big btn btn-info btn-simple" href="#" data-target="#createUserModal" data-toggle="modal">
+                                    <i class="fa fa-plus">
+                                    </i></a>
+                                  </div>
+                                  <div class="row">
+                                    <a class="numbers btn btn-info btn-simple" href="#" data-target="#createUserModal" data-toggle="modal">
+                                    Create Permission</a>
+                                  </div>
+                              </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Permissions</h4>
+                                    <a class="refresh pull-right" href="javascript:void(0);"><i class="fa fa-refresh fa-2x fa-fw"></i></a>
+                                    <br />
+                                </div>
+                                    <div class="card-content">
+                                    <div class="table-responsive">
+                                        <table class="table header-fixed ">
+                                            <thead>
+                                                <tr>
+                                                    <th>Action</th>
+                                                    <th>Contract</th>
+                                                    <th>Task</th>
+                                                    <th>Job Number</th>
+                                                    <th>PO Number</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% set increment = 0 %}
+                                                
+                                                {% for report in customReports %}                                                    
+                                                     {% set increment = increment + 1 %}
+                                                <tr>
+                                                    <td>
+                                                        <a class="edit" href="javascript:void(0);" data-location="editpermission?id={{report.id}}" >
+                                                            <i class="ti-pencil" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a class="delete" href="javascript:void(0);" data-location="deletepermission?id={{report.id}}">
+                                                            <i class="fa fa-trash-o" aria-hidden="true" ></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        {{report.contract}}   
+                                                    </td>
+                                                    <td>
+                                                        {{report.taskcode}}
+                                                    </td>
+                                                    <td>
+                                                        {{report.jobnumber}}
+                                                    </td>
+                                                    <td>
+                                                        {{report.ponumber}}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                
+                                                
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!--  end card  -->
+                            </div>
+
+                            </div>
+                </div>
+            </div>
+        </div><div class="modal fade" id="createUserModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Permission</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form id="createUser">
+            <div class="form-group">
+                            <label class="control-label" for="salutation">Employee</label>
+                            <div class="controls">
+                                <select name="employeeid" placeholder="" class="form-control"  />
+                                    {% for employee in employees %}
+                                        {# {% set selected = '' %}
+                                            {% if (oneSupervisor.fname ~ ' ' ~ oneSupervisor.lname) == user.supervisor %}
+                                                {% set selected = 'selected' %}
+                                            {% endif %} #}
+                                        <option value="{{employee.id}}">{{employee.firstname}} {{employee.lastname}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div></div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Contract</label>
+                            <div class="controls">
+                                <input type="text" name="contract" value="NA" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Po Number</label>
+                            <div class="controls">
+                                <input type="text" name="ponumber" placeholder="" value="NA" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Task Code</label>
+                            <div class="controls">
+                                <input type="text" name="taskcode" placeholder="" maxlength="" value="NA" class="form-control" />
+                            </div>
+                        </div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Job ID</label>
+                            <div class="controls">
+                                <input type="text" name="jobid" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">BLC Code</label>
+                            <div class="controls">
+                                <input type="text" name="blccode" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Job Number</label>
+                            <div class="controls">
+                                <input type="text" name="jobnumber" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship Start Date</label>
+                            <div class="controls">
+                                <input type="text" name="relationshipstartdate" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship End Date</label>
+                            <div class="controls">
+                                <input type="text" name="relationshipenddate" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Last Updated By</label>
+                            <div class="controls">
+                                <input type="text" name="lastupdatedby" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Last Updated date</label>
+                            <div class="controls">
+                                <input type="text" name="lastupdatedate" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Comment</label>
+                            <div class="controls">
+                                <input type="text" name="Comment" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Created BY</label>
+                            <div class="controls">
+                                <input type="text" name="createdby" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Date Created</label>
+                            <div class="controls">
+                                <input type="text" name="datecreated" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            
+            <div class="category"><star>*</star> Required fields</div>
+            <form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary create" >Submit</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{{ include('footer.twig') }}
+<script type="text/javascript">
+$(document).ready(function(){
+    $(document).on('click', '.create', function(){
+        var form = document.getElementById("createUser");
+         var notify = message = "Permission Creation started at:" + Date();
+                var type = "warning";
+                var error = false;
+                pushNotification(message, notify, type);
+        		//$('.refresh i').addClass("fa-spin");
+                //var error = false;
+        		$.ajax({
+				  url:"savepermission",
+				  data: new FormData(form),// the formData function is available in almost all new browsers.
+				  type:"post",
+				  contentType:false,
+				  processData:false,
+				  cache:false,
+				 // Change this according to your response from the server.
+				  error:function(err){
+			         error = true;
+				  },
+				  success:function(data){
+
+                  },
+                  complete:function(data){
+                    var notify = message = "Permission created at: "+Date();
+                    var type = "success";
+                    if (error === true) {
+                        notify = message = "Permission creation failed at: "+Date();
+                        type = "danger";
+                    }
+                    pushNotification(message, notify, type);
+  				  	$('.btn-secondary').click()
+                    //window.location.reload();
+        		  },
+        });
+    });
+
+    $(document).on('click','.edit', function(){
+        var href = $(this).attr('data-location');
+        $('#createUserModal .modal-body').load(href,function(){
+            $('#createUserModal').modal({show:true});
+        });
+    });
+
+    $(document).on('click','.delete', function(){
+        var href = $(this).attr('data-location');
+        
+        if (confirm("Do You want to delete this user?")) {
+            var message = "Permission deletion started at: " + Date();
+            var type = "warning";
+            pushNotification(message, message, type);
+            var error = false;
+            $.ajax({
+              url:href,
+              type:"get",
+              error:function(err){
+                    console.error(err);
+                error = true;
+              },
+              success:function(data){
+
+              },
+              complete:function(data){
+                var message = "Permission deletion completed at: " + Date();
+                var type = "success";
+                if (error === true) {
+                  message = "Permission deletion failed at: " + Date();
+                  type = "danger";  
+                }
+                pushNotification(message, message, type);
+                $('.close').click();
+                window.location.reload();
+            }
+
+        });
+        }
+    });
+});
+</script>

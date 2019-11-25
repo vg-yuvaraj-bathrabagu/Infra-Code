@@ -1,0 +1,956 @@
+{{ include('header.twig') }}
+    <div class="wrapper">
+    {{ include('sidebar.twig') }}
+
+        <div class="main-panel">
+            {{ include('top-nav.twig') }}
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                            <div class="card-content">
+                              {{ include('search.twig') }}
+                              <div class="pull-right">
+                                <div class="row text-center">
+                                    <a class="icon-big btn btn-info btn-simple" href="#" data-target="#createUserModal" data-toggle="modal">
+                                    <i class="fa fa-plus">
+                                    </i></a>
+                                  </div>
+                                  <div class="row">
+                                    <a class="numbers btn btn-info btn-simple" href="#" data-target="#createUserModal" data-toggle="modal">
+                                    Create User</a>
+                                  </div>
+                              </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Users</h4>
+                                    <a class="refresh pull-right" href="javascript:void(0);"><i class="fa fa-refresh fa-2x fa-fw"></i></a>
+                                    <br />
+                                </div>
+                                    <div class="card-content">
+                                    <div class="table-responsive">
+                                        <table class="table header-fixed ">
+                                            <thead>
+                                                <tr>
+                                                    <th>Action</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Job Title</th>
+                                                    <th>User Name</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% set increment = 0 %}
+
+                                                {% for report in customReports %}
+
+                                                     {% set increment = increment + 1 %}
+                                                <tr>
+                                                    <td>
+                                                        <a class="edit" href="javascript:void(0);" data-location="edituser?id={{report.id}}" >
+                                                            <i class="ti-pencil" aria-hidden="true"></i>
+                                                        </a>
+                                                        <!--<a class="view" href="javascript:void(0);" data-location="viewquery?id={{report.id}}">
+                                                            <i class="ti-eye" aria-hidden="true"></i>
+                                                        </a>-->
+                                                        <a class="delete" href="javascript:void(0);" data-location="deleteuser?id={{report.id}}">
+                                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                        </a>
+                                                        {# <a class="run" href="javascript:void(0);" data-location="runquery?id={{report.id}}">
+                                                            <i class="ti-control-play" aria-hidden="true"></i>
+                                                        </a> #}
+                                                    </td>
+                                                    <td>
+                                                        {{ report.firstname }}
+                                                    </td>
+                                                    <td>
+                                                        {{ report.lastname }}
+                                                    </td>
+                                                    <td>
+                                                        {{ report.jobtitle }}
+                                                    </td>
+                                                    <td>
+                                                        {{ report.username }}
+                                                    </td>
+
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!--  end card  -->
+                            </div>
+
+                            </div>
+                </div>
+            </div>
+        </div>
+<div class="modal fade" id="createUserModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">User</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+<form id="createUser">
+    <div class="row">
+	    <div class="card">
+            <div class="card-content">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active"><a href="#home" data-toggle="tab">General</a></li>
+                            <li><a href="#profile" data-toggle="tab">Contact</a></li>
+                            <li><a href="#HR" data-toggle="tab">HR</a></li>
+                            <li><a href="#Payroll" data-toggle="tab">Payroll</a></li>
+                            <li><a href="#Projects" data-toggle="tab">Projects</a></li>
+                            <li><a href="#Emergencycontact" data-toggle="tab">Emergency Contact</a></li>
+                            <li><a href="#emprate" data-toggle="tab">Employee Rate</a></li>
+                            <li><a href="#PTrel" data-toggle="tab">PT Relationship</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="my-tab-content" class="tab-content">
+                    <div class="tab-pane active" id="home">
+                        <div class="form-group">
+                            <label class="control-label" for="salutation">Salutation</label>
+                            <div class="controls">
+                                <select name="salutation" placeholder="" class="form-control">
+                                    <option value="all">All</option>
+                                    <option value="dr">Dr</option>
+                                    <option value="miss">Miss</option>
+                                    <option value="mr">Mr</option>
+                                    <option value="mrs">Mrs</option>
+                                    <option value="ms">Ms</option>
+                                    <option value="minor">Minor</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div></div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">First Name</label>
+                            <div class="controls">
+                                <input type="text" name="firstname" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="last-name">Last Name</label>
+                            <div class="controls">
+                              <input type="text" name="lastname" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="first-name">Username</label>
+                            <div class="controls">
+                                <input type="text" name="username" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Password</label>
+                            <div class="controls">
+                                <input type="password" name="password" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Email</label>
+                            <div class="controls">
+                                <input type="email" name="email" placeholder=""  class="form-control" />
+                            </div></div>
+                           <div class="form-group">
+                            <label class="control-label" for="email">Initials</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Gender</label>
+                            <div class="controls">
+                                <select name="gender" placeholder="" class="form-control">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Job Title</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">BLC Code</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Employee Job Category</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Department</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Location</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Work Email Address</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                             <div class="form-group">
+                            <label class="control-label" for="email">Personal Email Address</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">User Type</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">User Category</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Status</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Week start from</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Hourly Wage($)</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Photo</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                             <div class="form-group">
+                            <label class="control-label" for="email">On Vacation</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                        <div class="category"><star>*</star> Required fields</div>
+                    </div>
+                    <div class="tab-pane" id="profile">
+                        <div class="form-group">
+                            <label class="control-label" for="email">Phone Mobile Number</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Home Phone</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Office Line</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Fax Number</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Address Line 1</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Address Line 2</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">State/Province</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Postal/Zip Code</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">City</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Country</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div><div class="form-group">
+                            <label class="control-label" for="email">Company Name</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Company Address</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                    </div>
+                    <div class="tab-pane" id="HR">
+                         <div class="form-group">
+                            <label class="control-label" for="email">Social Security #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                        <div class="form-group">
+                            <label class="control-label" for="email">Employer Identification Number</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">TSG Badge Number</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Employee Type</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Birth Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                             <div class="form-group">
+                            <label class="control-label" for="email">Hire Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Employee Start Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Employee End Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Release Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Last Review Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Next Review Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Supervisor Names</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Supervisor Email</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Supervisor Office Line</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Approver</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                             <div class="form-group">
+                            <label class="control-label" for="email">Approver MailID(s)</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Invoice Approver</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Invoice Approver MailID(s)</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Business Meeting Approver</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Business Meeting Approver MailID(s)</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Travel Expense Approver</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Travel Expense Approver MailID(s)</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">ODC Approver</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">ODC Approver MailID(s)</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Bills Approver</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Bills Approver MailID(s)</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Permission Template</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can view Employee Resources</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can view Public Holidays</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can view Payroll Dates</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can view Travel Policy</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can view 401k Information</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can view Reference Information	</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                    </div>
+                    <div class="tab-pane" id="Payroll">
+                        <div class="form-group">
+                            <label class="control-label" for="email">Payroll Frequency</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Invoice Category</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Maximum Hours per Day</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Maximum Hours per Week</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Vacation Days Allowed</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Maximum Vacation Days	</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Personal Days Allowed</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Maximum Personal Days</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Paid Holiday Allowed</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Maximum Paid Holiday Allowed</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Sick Days Allowed</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Maximum Sick Days</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can work on Saturday</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can work on Sunday</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Can work on Public Holidays</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Employee Benefits Billable</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Maximum Social Security</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                    </div>
+                    <div class="tab-pane" id="Projects">
+                        <div class="form-group">
+                            <label class="control-label" for="email">Add/Edit Project</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Contract</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">PO Number</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Task Code</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Project Name</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Job Number</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship Start Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship End Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Comments</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                        
+                    </div>
+                    <div class="tab-pane" id="Emergencycontact">   
+                    <h6>First Emergency Contact</h6>               
+                       <div class="form-group">
+                            <label class="control-label" for="email">First Name</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>  
+                            <div class="form-group">
+                            <label class="control-label" for="email">Last Name</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Street Address</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">City</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">State</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Zip Code</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Home Phone #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Work Phone #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div> 
+                            <div class="form-group">
+                            <label class="control-label" for="email">Cell Phone or Pager #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>         
+                            <h6>Second Emergency Contact</h6>               
+                       <div class="form-group">
+                            <label class="control-label" for="email">First Name</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>  
+                            <div class="form-group">
+                            <label class="control-label" for="email">Last Name</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Street Address</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">City</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">State</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Zip Code</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Home Phone #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Work Phone #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div> 
+                            <div class="form-group">
+                            <label class="control-label" for="email">Cell Phone or Pager #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <h6>Third Emergency Contact</h6>               
+                       <div class="form-group">
+                            <label class="control-label" for="email">First Name</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>  
+                            <div class="form-group">
+                            <label class="control-label" for="email">Last Name</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Street Address</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">City</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">State</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Zip Code</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Home Phone #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                         
+                            <div class="form-group">
+                            <label class="control-label" for="email">Work Phone #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div> 
+                            <div class="form-group">
+                            <label class="control-label" for="email">Cell Phone or Pager #</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                                                                                                                     
+                    </div>
+                    <div class="tab-pane" id="emprate">
+                        <div class="form-group">
+                            <label class="control-label" for="email">Add/Edit Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Job Number</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Client Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Contractor Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Agency Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Premium Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Double Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Triple Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Daily Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Weekly Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Monthly Rate</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Effective Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Expiry Date</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>            
+                            <div class="form-group">
+                            <label class="control-label" for="email">Comments</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>                        
+                        
+                    </div>
+                    <div class="tab-pane" id="PTrel">
+                        <h6>Tasks</h6>
+                        <div class="form-group">
+                            <label class="control-label" for="email">Project Identifiers</label>
+                            <div class="controls">
+                                <input type="text" value="NA" name="initials" placeholder=""  class="form-control" />
+                            </div></div>
+                        
+                    </div>
+ 
+ 
+ 
+                </div>
+	        </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary create" >Submit</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{{ include('footer.twig') }}
+<script type="text/javascript">
+$(document).ready(function(){
+    $(document).on('click', '.create', function(){
+        var form = document.getElementById("createUser");
+         var notify = message = "User Creation started at:" + Date();
+                var type = "warning";
+                var error = false;
+                pushNotification(message, notify, type);
+        		//$('.refresh i').addClass("fa-spin");
+                //var error = false;
+        		$.ajax({
+				  url:"saveuser",
+				  data: new FormData(form),// the formData function is available in almost all new browsers.
+				  type:"post",
+				  contentType:false,
+				  processData:false,
+				  cache:false,
+				 // Change this according to your response from the server.
+				  error:function(err){
+			         error = true;
+				  },
+				  success:function(data){
+
+                  },
+                  complete:function(data){
+                    var notify = message = "User created at: "+Date();
+                    var type = "success";
+                    if (error === true) {
+                        notify = message = "User creation failed at: "+Date();
+                        type = "danger";
+                    }
+                    pushNotification(message, notify, type);
+  				  	$('.btn-secondary').click()
+                    window.location.reload();
+        		  },
+        });
+    });
+
+    $(document).on('click','.edit', function(){
+        var href = $(this).attr('data-location');
+        $('#createUserModal .modal-body').load(href,function(){
+            $('#createUserModal').modal({show:true});
+        });
+    });
+
+    $(document).on('click','.delete', function(){
+        var href = $(this).attr('data-location');
+        if (confirm("Do You want to delete this user?")) {
+            var message = "User deletion started at: " + Date();
+            var type = "warning";
+            pushNotification(message, message, type);
+            var error = false;
+            $.ajax({
+              url:href,
+              type:"get",
+              error:function(err){
+                    console.error(err);
+                error = true;
+              },
+              success:function(data){
+
+              },
+              complete:function(data){
+                var message = "User deletion completed at: " + Date();
+                var type = "success";
+                if (error === true) {
+                  message = "User deletion failed at: " + Date();
+                  type = "danger";  
+                }
+                pushNotification(message, message, type);
+                $('.close').click();
+                window.location.reload();
+            }
+
+        });
+        }
+    });
+});
+</script>

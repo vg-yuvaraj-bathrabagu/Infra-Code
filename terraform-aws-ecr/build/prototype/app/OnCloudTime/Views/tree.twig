@@ -1,0 +1,71 @@
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../assets/css/paper-dashboard.css?v=1.2.1" rel="stylesheet"/>
+<link href="../../assets/css/jstreestyle.css" rel="stylesheet">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="hidden" class="reload close" aria-hidden="true"><i class="fa fa-refresh fa-fw"></i></button>
+                 <h4 class="modal-title">Athena Directories</h4>
+
+            </div>
+            <div class="modal-body"><div class="te"><div id="container"></div></div><div class="loader centered" style="display:none"><i class="fa fa-refresh fa-2x fa-fw fa-spin"></i></div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Copy</button>
+            </div>
+
+
+<script src="../../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../../assets/js/jstree.js"></script>
+<script src="../../assets/js/bootstrap-notify.js"></script>
+<script>
+$(function() {
+  $('#container').jstree({
+    'core' : {
+      'data' : {
+        "url" : "athenafiles",
+        "dataType" : "json" // needed only if you do not supply JSON headers
+      }
+    }
+  });
+      $(document).on('click', '.btn-primary', function() {
+        var instance = $('#container').jstree(true);
+        var copyPath = instance.get_selected();
+        var files = $('#files').val();
+        $('.loader').toggle(1000);
+        $('.te').toggle(1000);
+        var message = files+" Athena S3 copy started at: " + Date();
+        var type = "warning";
+        pushNotification(message, message, type);
+        error = false
+        $.ajax({
+          url:"copy",
+          data: {"path": copyPath[0], "file" : files},// the formData function is available in almost all new browsers.
+          type:"post",
+           // Change this according to your response from the server.
+          error:function(err){
+             error = true;
+          },
+          success:function(data){
+
+          },
+          complete:function(data){
+          var message = files+" Athena S3 copy completed at: " + Date();
+          var type = "success";
+          if (error === true) {
+            message = "Athena S3 copy failed at: " + Date();
+            type = "danger";
+          }
+          pushNotification(message, message, type);
+          $('.loader').toggle(1000);
+          $('.te').toggle(1000);
+          $('.close').click();
+          }
+        });
+    });
+    $(document).on('click', '.reload', function(){
+      var instance = $('#container').jstree(true);
+      instance.refresh();
+    });
+});
+</script>

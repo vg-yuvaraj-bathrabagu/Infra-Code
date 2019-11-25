@@ -1,0 +1,390 @@
+{{ include('header.twig') }}
+	<div class="wrapper">
+    {{ include('sidebar.twig') }}
+
+	    <div class="main-panel">
+			{{ include('top-nav.twig') }}
+
+	        <div class="content">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-md-12">
+	                        <div class="card">
+                            <div class="card-content">
+                              {{ include('search.twig') }}
+                              <div class="pull-right">
+                                <div class="row text-center">
+                                    <a class="icon-big btn btn-info btn-simple" href="#" data-target="#s3UploadModal" data-toggle="modal">
+                                    <i class="fa fa-cloud-upload">
+                                    </i></a>
+                                  </div>
+                                  <div class="row">
+                                    <a class="numbers btn btn-info btn-simple" href="#" data-target="#s3UploadModal" data-toggle="modal">
+                                    Upload</a>
+                                  </div>
+                              </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+	                    </div>
+	                </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="refresh-big hide text-center">
+                              <i class="fa fa-refresh fa-5x fa-spin refresh-big text-center"></i>
+                            </div>
+                            <div class="tablecontent">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+<div class="modal fade" id="s3UploadModal" role="dialog">
+    <div class="modal-dialog">
+        <form id="registerFormValidation" action="" method="" novalidate="">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Files</h4>
+            </div>
+            <div class="modal-body">
+
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                            <span class="sr-only">60% Complete</span>
+                                        </div>
+                                    </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Choose File <star>*</star></label>
+                                            <input class="form-control"
+                                                   name="file"
+                                                   id="file"
+                                                   type="file"
+                                                   required="true"
+
+                                            />
+                                        </div>
+                                        <div class="category"><star>*</star> Required fields</div>
+
+                                    <div class="card-footer">
+
+                                        <div class="clearfix"></div>
+                                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary s3-close" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary submit">Upload</button>
+            </div>
+        </div>
+  </form>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <input type="hidden" id="files" />
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content"></div>
+
+    </div>
+</div>
+{{ include('footer.twig') }}
+
+    <script type="text/javascript">
+        $().ready(function(){
+            //console.log($('#registerFormValidation').validate());
+            $('#registerFormValidation').submit(function( event ) {
+			 $('#registerFormValidation').validate();
+                var form = document.getElementById("registerFormValidation");
+// or with jQuery
+//var form = $("#myform")[0];
+$('.progress-bar').css('width', "1%");
+$('.progress').css('display', 'block');
+$('.refresh i').addClass("fa-spin");
+var file = $('#file').val();
+var message = file+" File upload to s3 started at: "+ Date();
+var notify =  file+" File upload to s3 started at: "+ Date();
+var type = "warning";
+pushNotification(message, notify, type);
+var error = false;
+$.ajax({
+  url:"processs3",
+  data: new FormData(form),// the formData function is available in almost all new browsers.
+  type:"post",
+  contentType:false,
+  processData:false,
+  cache:false,
+  dataType:"json", // Change this according to your response from the server.
+  error:function(err){
+
+     error =true;
+  },
+  success:function(data){
+    console.log(data);
+  },
+  complete:function(data){
+  	var progressComplete = false;
+
+  	//progressComplete = showProgress(data);
+  	//if(progressComplete === true){
+    //$('.progress').css('display', 'none');
+    $('.s3-close').click();
+    var message = file+" File upload to s3 completed at: "+ Date();
+    var notify = file+" File upload to s3 completed at: "+ Date();
+    var type = "success";
+    if (error === true) {
+      message = file+" File upload to S3 falied at: " + Date();
+      notify = file+" File upload to S3 failed at:" + Date();
+      type = "danger";
+    }
+    pushNotification(message, notify, type);
+   $("#file").val('');
+
+                //var form = document.getElementById("emrform");
+
+                $.ajax({
+                  url:"uploads",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    console.error(err);
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    $('.refresh i').removeClass("fa-spin");
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+
+  //}
+}
+});
+
+
+  				event.preventDefault();
+			});
+
+$(document).on('click', '.copy', function() {
+    var file = $(this).attr('data-file');
+    
+    $("#files").val(file);
+
+});
+
+$(document).on('click', '.orc', function() {
+    $('.refresh i').addClass("fa-spin");
+    var file = $(this).attr('data-file');
+    var error = false;
+    var message = file+" ORC Conversion started at" + Date();
+    var type = "warning";
+    pushNotification(message, message, type);
+    $.ajax({
+                  url:"copyorc",
+                  // the formData function is available in almost all new browsers.
+                  type:"POST",
+                  data: {'file': $(this).attr('data-file')},
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    console.error(err);
+            error = true;
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    var message = file+" ORC Conversion completed at" + Date();
+                    var type = "success";
+                    
+                    if (error === true) {
+                      message = file+" ORC Conversion Failed at" + Date();
+                      type = "danger";
+                    }
+                    pushNotification(message, message, type);
+                    $.ajax({
+                  url:"uploads",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  error:function(err){
+                    console.error(err);
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    $('.toggle').click();
+                    $('.refresh i').removeClass("fa-spin");
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+
+                  },
+                  });
+});
+$(document).on('click', '.par', function() {
+    $('.refresh i').addClass("fa-spin");
+    var error = false;
+    var file = $(this).attr('data-file');
+    var message = file+" Parquet Conversion started at" + Date();
+    var type = "warning";
+    pushNotification(message, message, type);
+    $.ajax({
+                  url:"copypar",
+                  // the formData function is available in almost all new browsers.
+                  type:"POST",
+                  data: {'file': $(this).attr('data-file')},
+                  error:function(err){
+                    error = true;
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    var message = file+" Parquet Conversion Completed at" + Date();
+                    var type = "success";
+                    if (error === true) {
+                      message = file+" Parquet Conversion Failed at" + Date();
+                      type = "error";
+                    }
+                    pushNotification(message, message, type);
+                    $.ajax({
+                  url:"uploads",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    console.error(err);
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    $('.toggle').click();
+                    $('.refresh i').removeClass("fa-spin");
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+
+                  },
+                  });
+});
+
+$(document).on('click', '.del', function() {
+    if (confirm('Do You want to delete this file')){
+    $('.refresh i').addClass("fa-spin");
+    var error = false;
+    var file = $(this).attr('data-file');
+    var message = file+" S3 File deletion started at" + Date();
+    var type = "warning";
+    pushNotification(message, message, type);
+    $.ajax({
+                  url:"deletes3",
+                  // the formData function is available in almost all new browsers.
+                  type:"POST",
+                  data: {'file': $(this).attr('data-file')},
+                  error:function(err){
+                    error = true;
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    var message = file+" S3 File deletion completed at" + Date();
+                    var type = "success";
+                    if (error === true) {
+                      var message = file+" S3 File deletion failed at" + Date();
+                      var type = "danger";
+                    }
+                    pushNotification(message, message, type)
+                    $.ajax({
+                  url:"uploads",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    error = true;
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+
+                    $('.refresh i').removeClass("fa-spin");
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+
+                  },
+                  });
+}
+});
+        });
+function showProgress(data) {
+	$.each(data.responseJSON.progress, function(key, value) {
+		$('.progress-bar').css('width', value.percent+"%");
+        if (value.percent === 100) {
+            return true;
+        }
+	});
+
+	return true
+}
+
+$(document).ready(function() {
+$('.refresh-big').removeClass("hide");
+  $.ajax({
+                  url:"uploads",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    console.error(err);
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    $('.refresh-big').addClass("hide");
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+    $(document).on('click', '.refresh', function() {
+    $(this).addClass("fa-spin");
+      $.ajax({
+                  url:"uploads",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    console.error(err);
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+
+                    $(this).removeClass("fa-spin");
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+    })
+});
+
+
+    </script>
+

@@ -1,0 +1,88 @@
+{{ include('header.twig') }}
+    <div class="wrapper">
+        {{ include('sidebar.twig') }}
+
+        <div class="main-panel">
+            {{ include('top-nav.twig') }}
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    {{ include('search.twig') }}
+                                    <!--<div class="pull-right">
+                                        <div class="row text-center">
+                                            <a class="icon-big btn btn-info btn-simple" href="#" data-target="#myModal" data-toggle="modal">
+                                            <i class="fa fa-plus">
+                                            </i></a>
+                                        </div>
+                                        <div class="row">
+                                            <a class="numbers btn btn-info btn-simple" href="javascript:void(0)" data-target="#myModal" data-toggle="modal">
+                                            Create EMR</a>
+                                        </div>
+                                    </div>-->
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="refresh-big hide text-center">
+                              <i class="fa fa-refresh fa-5x fa-spin refresh-big text-center"></i>
+                            </div>
+                            <div class="tablecontent">
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {{ include('footer.twig') }}
+<script type="text/javascript">
+    $(document).ready(function() {
+$('.refresh-big').removeClass("hide");
+  $.ajax({
+                  url:"sqslist",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    console.error(err);
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    $('.refresh-big').addClass("hide");
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+    $(document).on('click', '.refresh', function() {
+    $(this).addClass("fa-spin");
+      $.ajax({
+                  url:"sqslist",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    console.error(err);
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+
+                    $(this).removeClass("fa-spin");
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+    })
+});
+</script>

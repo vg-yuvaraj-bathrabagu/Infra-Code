@@ -1,0 +1,232 @@
+{{ include('header.twig') }}
+    <div class="wrapper">
+    {{ include('sidebar.twig') }}
+
+        <div class="main-panel">
+            {{ include('top-nav.twig') }}
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                            <div class="card-content">
+                              {{ include('search.twig') }}
+                              <div class="pull-right">
+                                <div class="row text-center">
+                                    <a class="icon-big btn btn-info btn-simple" href="#" data-target="#createTable" data-toggle="modal">
+                                    <i class="fa fa-plus">
+                                    </i></a>
+                                  </div>
+                                  <div class="row">
+                                    <a class="numbers btn btn-info btn-simple" href="#" data-target="#createTable" data-toggle="modal">
+                                    Create Table</a>
+                                  </div>
+                              </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="refresh-big hide text-center">
+                              <i class="fa fa-refresh fa-5x fa-spin refresh-big text-center"></i>
+                            </div>
+                            <div class="tablecontent">
+
+                            </div>
+                            </div>
+
+                            </div>
+                </div>
+            </div>
+        </div>
+{{ include('footer.twig') }}
+<div class="modal fade" id="createTable">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Create Table</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form id="createTableForm">
+            <div class="form-group">
+                <label class="control-label">Folders <star>*</star></label>
+                <select required name="type" class="form-control folders">
+                    <option value="">----</option>
+                    {% for report in customReports %}
+                        <option value="{{report.Prefix}}">{{report.Prefix}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Table Name<star>*</star></label>
+                <input class="form-control tablename" type="text" name="tablename" value="" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Column Definition <star>*</star></label>
+                <textarea placeholder="Provide coma sperated column names with datatype. (eg: surname STRING,firstname STRING)" required class="form-control columns" rows="5" name="description"></textarea>
+            </div>
+            <div class="category"><star>*</star> Required fields</div>
+            <form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary add-table" >Create</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<div class="modal fade" id="editTable">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Table</h4>
+          <button type="button" class="close cls" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <i class="fa fa-refresh fa-2x fa-fw fa-spin ref"></i>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary cls" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary edit-table" >Create</button>
+        </div>
+
+      </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+$(document).on('click','.table-edit', function(){
+        var href = $(this).attr('data-location');
+        $('#editTable').modal({show:true});
+        $('#editTable .modal-body').load(href,function(){
+            
+        });
+});
+$(document).on('click','.cls', function(){
+        if (!$('.ref').length){
+            $('#editTable .modal-body').html('<i class="fa fa-refresh fa-2x fa-fw fa-spin ref"></i>');
+        }
+    });
+loadTables(true);
+
+
+    $(document).on('click', '.add-table', function() {
+        var columns = $('.columns').val(),
+        table = $('.tablename').val(),
+        file = $('.folders option:selected').val();
+        $.ajax({
+            url:"createtable",
+            data: {'columns': columns,
+                'tablename': table,
+                'file': file},// the formData function is available in almost all new browsers.
+            type:"post",
+             // Change this according to your response from the server.
+            error:function(err){
+                console.error(err);
+            },
+            success:function(data){
+                $('#createTable .close').click();
+                var notify = message = table+" Table Created at: "+ Date();
+                var type = "success";
+                pushNotification(message, notify, type);
+                loadTables(false)
+            },
+            complete:function(data){
+
+            }
+        });
+    });
+$(document).on('click', '.edit-table', function() {
+        var columns = $('#editTableForm .columns').val(),
+        table = $('#editTableForm .tablename').val(),
+        oldtable = $('#editTableForm .oldtable').val(),
+        file = $('#editTableForm .folders-edit option:selected').val();
+        if (!$('.ref').length){
+            $('#editTable .modal-body').html('<i class="fa fa-refresh fa-2x fa-fw fa-spin ref"></i>');
+        }
+        $.ajax({
+            url:"createtable",
+            data: {'columns': columns,
+                'tablename': table,
+                'file': file,
+                'oldtable': oldtable},// the formData function is available in almost all new browsers.
+            type:"post",
+             // Change this according to your response from the server.
+            error:function(err){
+                console.error(err);
+            },
+            success:function(data){
+                $('#editTable .cls').click();
+                var notify = message = "Table Edited at: "+ Date();
+                var type = "success";
+                pushNotification(message, notify, type);
+                loadTables(false)
+            },
+            complete:function(data){
+
+            }
+        });
+    });
+$(document).on('click', '.refresh i', function(){
+    loadTables(false);
+});
+$('.refresh i').click(function(){
+    loadTables(false);
+});
+$(document).on('change', '.folders', function(){
+   var table = $('.folders option:selected').val();
+   table = table.replace('athena/', '');
+   table = table.replace('/', '');
+   $('.tablename').val(table);
+});
+});
+
+function loadTables(loader) {
+    if (loader === true) {
+        $('.refresh-big').removeClass('hide');
+    } else {
+        $('.refresh i').addClass('fa-spin');
+    }
+        $.ajax({
+                  url:"listtables",
+                  // the formData function is available in almost all new browsers.
+                  type:"get",
+                 
+                  dataType:"html", // Change this according to your response from the server.
+                  error:function(err){
+                    console.error(err);
+                  },
+                  success:function(data){
+
+                  },
+                  complete:function(data){
+                    if (loader === true) {
+                        $('.refresh-big').addClass("hide");
+                    } else {
+                        $('.refresh i').removeClass('fa-spin');
+                    }
+                    $('.tablecontent').html(data.responseText);
+
+                  },
+                  });
+    }
+
+
+</script>

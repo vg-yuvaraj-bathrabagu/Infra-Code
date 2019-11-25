@@ -1,0 +1,27 @@
+<div class="card">
+<div class="card-header">
+    <h4 class="card-title">SQS</h4>
+    <a class="refresh pull-right" href="javascript:void(0);"><i class="fa fa-refresh fa-2x fa-fw"></i></a>
+</div>
+<div class="card-content">
+    <table class="table header-fixed">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set increment = 0 %}
+
+            {% for report in customReports %}
+                 {% set increment = increment + 1 %}
+             <tr>
+                <td>{{ report.Body }}</td>
+                <td>{{ report.MessageAttributes.User.StringValue }}</td>
+             </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>

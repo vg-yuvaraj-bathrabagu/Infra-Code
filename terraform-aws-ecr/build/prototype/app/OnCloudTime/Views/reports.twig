@@ -1,0 +1,49 @@
+<div class="card">
+<div class="card-header">
+    <h4 class="card-title">EMR</h4>
+    <a class="refresh pull-right" href="javascript:void(0);"><i class="fa fa-refresh fa-2x fa-fw small-ref"></i></a>
+</div>
+<div class="card-content table-responsive table-full-width">
+    <table class="table header-fixed">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>Module</th>
+                <th>Descrtiption</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Comments</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set increment = 0 %}
+            {% for report in customReports %}
+                 {% set increment = increment + 1 %}
+             <tr>
+                <td><a href="javascript:void(0);"  title="Start EMR" class="btn btn-info btn-simple btn-xs start" data-id="{{report.id}}" data-cat='{{ report.category }}'>
+                        <i class="ti-control-play"></i>
+                    </a>
+                    <a href="javascript:void(0);"  title="Stop EMR" class="btn btn-success btn-simple btn-xs stop" data-id="{{report.id}}" data-cat='{{ report.category }}'>
+			{% for report in customReports %}
+			     {% set increment = increment + 1 %}
+			 <tr>
+			 	<td><a href="javascript:void(0);"  title="Start EMR" class="btn btn-info btn-simple btn-xs start" data-id="{{report.id}}">
+                        <i class="ti-control-play"></i>
+                    </a>
+                    <a href="javascript:void(0);"  title="Stop EMR" class="btn btn-success btn-simple btn-xs stop" data-id="{{report.id}}">
+                        <i class="ti-control-stop"></i>
+                    </a>
+                <td>{{ report.module }}</td>
+                <td>{{ report.description }}</td>
+                <td>{{ report.category }}</td>
+                <td>{{ report.status }}</td>
+                <td>{{ report.comments }}</td>
+                <td>{{ report.ts_begin.date|date('Y-m-d') }}</td>
+             </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+

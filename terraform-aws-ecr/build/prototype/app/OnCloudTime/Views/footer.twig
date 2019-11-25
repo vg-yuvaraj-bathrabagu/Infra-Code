@@ -1,0 +1,176 @@
+<footer class="footer">
+                <div class="container-fluid">
+                    <div class="copyright pull-left">
+                        &copy; <script>document.write(new Date().getFullYear())</script> OnCloudTime. All Rights Reserved
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="fixed-plugin hide">
+        <div class="dropdown">
+            <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="header-title">Sidebar Background</li>
+                <li class="adjustments-line text-center">
+                    <a href="javascript:void(0)" class="switch-trigger background-color">
+                        <span class="badge filter badge-brown active" data-color="brown"></span>
+                        <span class="badge filter badge-white" data-color="white"></span>
+                    </a>
+                </li>
+
+                <li class="header-title">Sidebar Active Color</li>
+                <li class="adjustments-line text-center">
+                    <a href="javascript:void(0)" class="switch-trigger active-color">
+                            <span class="badge filter badge-primary" data-color="primary"></span>
+                            <span class="badge filter badge-info" data-color="info"></span>
+                            <span class="badge filter badge-success" data-color="success"></span>
+                            <span class="badge filter badge-warning" data-color="warning"></span>
+                            <span class="badge filter badge-danger active" data-color="danger"></span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+    <!--   Core JS Files. Extra: TouchPunch for touch library inside jquery-ui.min.js   -->
+    <script src="../../assets/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/perfect-scrollbar.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <!--  Forms Validations Plugin -->
+    <script src="../../assets/js/jquery.validate.min.js"></script>
+
+    <!-- Promise Library for SweetAlert2 working on IE -->
+    <script src="../../assets/js/es6-promise-auto.min.js"></script>
+
+    <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+    <script src="../../assets/js/moment.min.js"></script>
+
+    <!--  Date Time Picker Plugin is included in this js file -->
+    <script src="../../assets/js/bootstrap-datetimepicker.js"></script>
+
+    <!--  Select Picker Plugin -->
+    <script src="../../assets/js/bootstrap-selectpicker.js"></script>
+
+    <!--  Checkbox, Radio, Switch and Tags Input Plugins -->
+    <script src="../../assets/js/bootstrap-switch-tags.js"></script>
+
+    <!-- Circle Percentage-chart -->
+    <script src="../../assets/js/jquery.easypiechart.min.js"></script>
+
+    <!--  Charts Plugin -->
+    <script src="../../assets/js/chartist.min.js"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="../../assets/js/bootstrap-notify.js"></script>
+
+    <!-- Sweet Alert 2 plugin -->
+    <script src="../../assets/js/sweetalert2.js"></script>
+
+    <!-- Vector Map plugin -->
+    <script src="../../assets/js/jquery-jvectormap.js"></script>
+
+    <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFPQibxeDaLIUHsC6_KqDdFaUdhrbhZ3M"></script>
+
+    <!-- Wizard Plugin    -->
+    <script src="../../assets/js/jquery.bootstrap.wizard.min.js"></script>
+
+    <!--  Bootstrap Table Plugin    -->
+    <script src="../../assets/js/bootstrap-table.js"></script>
+
+    <!--  Plugin for DataTables.net  -->
+    <script src="../../assets/js/jquery.datatables.js"></script>
+
+    <!--  Full Calendar Plugin    -->
+    <script src="../../assets/js/fullcalendar.min.js"></script>
+
+    <!-- Paper Dashboard PRO Core javascript and methods for Demo purpose -->
+    <script src="../../assets/js/paper-dashboard.js?v=1.2.1"></script>
+
+    <!--   Sharrre Library    -->
+    <script src="../../assets/js/jquery.sharrre.js"></script>
+
+    <!-- Paper Dashboard PRO DEMO methods, don't include it in your project! -->
+    <script src="../../assets/js/demo.js"></script>
+
+</html>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('li').removeClass('active');
+    $('div').removeClass('in');
+    var activeClass = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+        $('.'+activeClass).parents('li').addClass('active');
+    if ($('.'+activeClass).parent('li').closest('div')) {
+        $('.'+activeClass).parent('li').closest('div').addClass('in');
+    }
+});
+
+$(document).on('keyup', '.search', function() {
+    var $rows = $('table tr');
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+    $rows.show().filter(function() {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+    }).hide();
+});
+
+function pushNotification(message, notification, notifyType, stage) {
+    $.notify({
+              icon: 'ti-bell',
+              message: message
+
+            },{
+                type: notifyType,
+                timer: 1000
+            });
+            var cls = "icon-success";
+            if( notification.indexOf('failed') >= 0){
+                cls = "icon-danger";
+            }
+            $(".notify").append("<li class="+cls+"><a class="+cls+" href='#'>"+notification+"</a></li>");
+            var notifyCount = $(".notify li").length;
+            $(".notification").html(notifyCount);
+            $.ajax({
+                url: "pushnotification",
+                type: "POST",
+                data: {'message': message}
+            });
+}
+
+$(document).ready(function() {
+    $.ajax({
+    url:"notifications",
+      // the formData function is available in almost all new browsers.
+      type:"GET",
+      error:function(err){
+        error = true;
+      },
+      success:function(data){
+
+      },
+      complete:function(data){
+        //console.log(data.responseJSON);
+        for (i in data.responseJSON) {
+            var cls = "icon-success";
+            if( data.responseJSON[i].action.indexOf('failed') >= 0){
+                cls = "icon-danger";
+            }
+           $(".notify").append("<li><a class="+cls+" href='#'>"+data.responseJSON[i].action+"</a></li>");
+        }
+      var notifyCount = $(".notify li").length;
+      $(".notification").html(notifyCount);
+      }
+    });
+
+});
+
+</script>

@@ -1,0 +1,95 @@
+{{ include('header.twig') }}
+    <div class="wrapper">
+    {{ include('sidebar.twig') }}
+
+        <div class="main-panel">
+            {{ include('top-nav.twig') }}
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">S3 Files</h4>
+                                    <p class="category">This table contains your uploaded S3 files.</p>
+                                    <a class="refresh pull-right" href="javascript:void(0);"><i class="fa fa-refresh fa-2x fa-fw"></i></a>
+                                    <br />
+                                </div>
+                                    <div class="card-content">
+                                    <div class="table-responsive">
+                                        <table class="table table-shopping">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>File</th>
+                                                     <th class="text-center">Column Names</th>
+                                                    <th class="text-center">Create Table</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% set increment = 0 %}
+
+                                                {% for report in customReports %}
+                                                     {% set increment = increment + 1 %}
+                                                <tr>
+                                                    <td>
+                                                        {{ increment }}
+                                                    </td>
+                                                    <td>
+                                                        {{ report.Prefix }}
+                                                    </td>
+                                                    <td class="td-product">
+                                                        <div class="form-group">
+                                                            <textarea class="form-control" placeholder="Provide coma sperated column names with datatype. (eg: surname STRING,firstname STRING)" rows="5"></textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a data-file="{{report.Prefix}}" href="javascript:void(0);" class="add-table">
+                                                        <i class="ti-plus icon-danger"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!--  end card  -->
+                            </div>
+
+                            </div>
+                </div>
+            </div>
+        </div>
+{{ include('footer.twig') }}
+<script>
+$(document).ready(function() {
+    $('.add-table').click(function() {
+        var columns = $(this).parent('td').prev('td').find('textarea').val(),
+        table = $(this).attr('data-file');
+        debugger;
+        $.ajax({
+            url:"createtable",
+            data: {'columns': columns,
+                'tablename': table},// the formData function is available in almost all new browsers.
+            type:"post",
+             // Change this according to your response from the server.
+            error:function(err){
+                console.error(err);
+            },
+            success:function(data){
+                var notify = message = "Table Created at: "+ Date();
+                var type = "success";
+                if (error === true) {
+                    notify = message = "Table creation failed at: "+Date();
+                    type = "danger";
+                }
+                pushNotification(message, notify, type);
+            },
+            complete:function(data){
+
+            }
+        });
+    });
+});
+</script>

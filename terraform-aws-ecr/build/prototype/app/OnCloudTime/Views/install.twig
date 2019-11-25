@@ -1,0 +1,217 @@
+{{ include('header.twig') }}
+    <div class="wrapper wrapper-full-page">
+        <div class="full-page login-page">
+
+            <div class="content">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-md-8 col-md-offset-2">
+	                        <div class="card card-wizard" id="wizardCard">
+	                            <form id="wizardForm" method="POST" action="updateconfig">
+		                            <div class="card-header text-center">
+		                                <h4 class="card-title">Configuration</h4>
+		                            </div>
+	            					<div class="card-content">
+		            				    <ul class="nav">
+											<li><a href="#tab5" data-toggle="tab">Instructions</a></li>
+		            						<li><a href="#tab1" data-toggle="tab">Database</a></li>
+		            						<li><a href="#tab2" data-toggle="tab">S3</a></li>
+		            						<li><a href="#tab3" data-toggle="tab">Athena</a></li>
+                                            <li><a href="#tab4" data-toggle="tab">Queue</a></li>
+		            					</ul>
+		            					<div class="tab-content">
+											<div class="tab-pane" id="tab5">
+		                                        <h5 class="text-center">Please read the instructions carefully before proceeding.</h5>
+		                                        <div class="row">
+													1. Create S3, SQS, Athena services.<br />
+													2. Create database and import the sql file provided in sql directory.<br />
+													3. Provide the details asked in forthcoming steps respectively for successful installation.
+		                                        </div>
+		            					    </div>
+		            					    <div class="tab-pane" id="tab1">
+		                                        <h5 class="text-center">Provide the configurations by completing this wizard.</h5>
+		                                        <div class="row">
+		                                            <div class="col-md-5 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Host Name<star>*</star>
+															</label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="db_host"
+                                                                   required="true"
+                                                                   value={{config.rdbms.host}}
+															/>
+		                                                </div>
+		                                            </div>
+                                                    <div class="col-md-5">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Database<star>*</star>
+															</label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="db_dbname"
+                                                                   required="true"
+                                                                   value={{config.rdbms.dbname}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row">
+                                                    <div class="col-md-5 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Username<star>*</star>
+															</label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="db_user"
+		                                                           required="true"
+                                                                   value={{config.rdbms.user}}
+															/>
+		                                                </div>
+		                                            </div>
+                                                    <div class="col-md-5">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Password<star>*</star>
+															</label>
+		                                                    <input class="form-control"
+		                                                           type="password"
+		                                                           name="db_password"
+                                                                   required="true"
+                                                                   value={{config.rdbms.password}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		            					    </div>
+		            					    <div class="tab-pane" id="tab2">
+                                                <h5 class="text-center">Provide the configurations by completing this wizard.</h5>
+		                                        <div class="row">
+		                                            <div class="col-md-5 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+                                                                Key<star>*</star>
+                                                            </label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="s3_key"
+		                                                           required="true"
+                                                                   value={{config.S3.credentials.key}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-md-5">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Secret<star>*</star>
+															</label>
+		                                                    <!--     IMPORTANT! - the "bootstrap select picker" is not compatible with jquery.validation.js, that's why we use the "default select" inside this wizard. We will try to contact the guys who are responsibble for the "bootstrap select picker" to find a solution. Thank you for your patience.
+		                                                     -->
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="s3_secret"
+		                                                           required="true"
+                                                                   value={{config.S3.credentials.secret}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row">
+		                                            <div class="col-md-10 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Bucket<star>*</star>
+															</label>
+		                                                    <!--     IMPORTANT! - the "bootstrap select picker" is not compatible with jquery.validation.js, that's why we use the "default select" inside this wizard. We will try to contact the guys who are responsibble for the "bootstrap select picker" to find a solution. Thank you for your patience.
+		                                                     -->
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="s3_bucket"
+		                                                           required="true"
+                                                                   value={{config.S3.bucket}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		            					    </div>
+		            						<div class="tab-pane" id="tab3">
+                                                <h5 class="text-center">Provide the configurations by completing this wizard.</h5>
+												<p class="text-center">Please start the athena service before completing this wizrd in AWS.</p>
+		            							<div class="row">
+		                                            <div class="col-md-5 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+                                                                Athena Directory<star>*</star>
+                                                            </label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="athena_dir"
+		                                                           required="true"
+                                                                   value={{config.athena.directory}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-md-5">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Database<star>*</star>
+															</label>
+		                                                    <!--     IMPORTANT! - the "bootstrap select picker" is not compatible with jquery.validation.js, that's why we use the "default select" inside this wizard. We will try to contact the guys who are responsibble for the "bootstrap select picker" to find a solution. Thank you for your patience.
+		                                                     -->
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="athena_db"
+		                                                           required="true"
+                                                                   value={{config.athena.database}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		            					    </div>
+                                            <div class="tab-pane" id="tab4">
+                                                <h5 class="text-center">Provide the configurations by completing this wizard.</h5>
+												<p class="text-center">Get the queue url from created sqs queue in AWS</p>
+		            							<div class="row">
+		                                            <div class="col-md-10 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+                                                                Queue URL<star>*</star>
+                                                                Queue Name<star>*</star>
+                                                            </label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="sqs_queue"
+		                                                           required="true"
+                                                                   url="true"
+                                                                   value={{config.sqs.notificationQueue}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		            					    </div>
+		            					</div>
+	            					</div>
+		            				<div class="card-footer">
+		                                <button type="button" class="btn btn-default btn-fill btn-wd btn-back pull-left">Back</button>
+		                                <button type="button" class="btn btn-info btn-fill btn-wd btn-next pull-right">Next</button>
+		                                <button type="button" class="finish btn btn-info btn-fill btn-wd btn-finish pull-right" >Finish</button>
+		                                <div class="clearfix"></div>
+		            				</div>
+	                        	</form>
+	                    	</div>
+	                	</div>
+	            	</div>
+	        	</div>
+	    	</div>
+{{ include('footer.twig') }}
+<script type="text/javascript">
+        $(document).ready(function(){
+			demo.initWizard();
+            $(document).on('click','.finish', function(){
+                $('#wizardForm').submit();
+            });
+		});
+	</script>

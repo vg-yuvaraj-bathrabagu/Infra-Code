@@ -1,0 +1,353 @@
+{{ include('header.twig') }}
+    <div class="wrapper">
+    {{ include('sidebar.twig') }}
+
+        <div class="main-panel">
+            {{ include('top-nav.twig') }}
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                            <div class="card-content">
+                              {{ include('search.twig') }}
+                              <div class="pull-right">
+                                <div class="row text-center">
+                                    <a class="icon-big btn btn-info btn-simple" href="#" data-target="#createQueryModal" data-toggle="modal">
+                                    <i class="fa fa-plus">
+                                    </i></a>
+                                  </div>
+                                  <div class="row">
+                                    <a class="numbers btn btn-info btn-simple" href="#" data-target="#createQueryModal" data-toggle="modal">
+                                    Create Query</a>
+                                  </div>
+                              </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Queries</h4>
+                                    
+                                    <br />
+                                </div>
+                                    <div class="card-content">
+                                    <div class="table-responsive">
+                                        <table class="table header-fixed ">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="action" data-checkbox="false">Action</th>
+                                                    <th data-field="title" data-checkbox="false">Title</th>
+                                                    <th data-field="type" data-checkbox="false">Type</th>
+                                                    <th data-field="bucket" data-checkbox="false">Bucket</th>
+                                                    <th data-field="description" data-checkbox="false">Description</th>
+                                                    <th data-field="report code" data-checkbox="false">Report Code</th>
+                                                    <th data-field="report code" data-checkbox="false">Report Code</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% set increment = 0 %}
+
+                                                {% for report in customReports %}
+
+                                                     {% set increment = increment + 1 %}
+                                                <tr>
+                                                    <td>
+                                                        <a class="edit" href="javascript:void(0);" data-location="editquery?id={{report.id}}" >
+                                                            <i class="ti-pencil" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a class="view" href="javascript:void(0);" data-location="viewquery?id={{report.id}}">
+                                                            <i class="ti-eye" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a class="delete" href="javascript:void(0);" data-location="deletequery?id={{report.id}}" data-query="{{report.querystring}}">
+                                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a class="run" href="javascript:void(0);" data-location="runquery?id={{report.id}}" data-query="{{report.querystring}}">
+                                                            <i class="ti-control-play" aria-hidden="true"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        {{ report.title }}
+                                                    </td>
+                                                    <td>
+                                                        {{ report.category }}
+                                                    </td>
+                                                    <td>
+                                                        {{ report.bucket }}
+                                                    </td>
+                                                    <td>
+                                                        {{ report.description }}
+                                                    </td>
+                                                    <td title="{{ report.querystring}}" class="half-rc">
+                                                        {{ report.querystring|length > 50 ? report.querystring|slice(0, 50) ~ '...' : report.querystring  }}
+                                                        {# {{ report.querystring }} #}
+                                                    </td>
+                                                    <td class="full-rc">
+                                                        {{ report.querystring }}
+                                                    </td>
+
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!--  end card  -->
+                            </div>
+
+                            </div>
+                </div>
+            </div>
+        </div>
+{{ include('footer.twig') }}
+ <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Query</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="runQuery" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close cls" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Query Results</h4>
+            </div>
+            <div class="modal-body">
+                <i class="fa fa-refresh fa-2x fa-fw fa-spin ref"></i>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary cls" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <div class="modal fade" id="createQueryModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Create Query</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form id="createQuery">
+            <div class="form-group">
+                <label class="control-label">Title <star>*</star></label>
+                <input class="form-control" type="text" name="title" required />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Type <star>*</star></label>
+                <select required name="type" class="form-control">
+                    <option value="">----</option>
+                    <option value="athena">Athena</option>
+                    <option value="hive">Hive</option>
+                    <option value="spark">Spark</option>
+                    <option value="DynamoDB">DynamoDB</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">S3 bucket<star>*</star></label>
+                <input class="form-control" type="text" name="bucket" required />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Description <star>*</star></label>
+                <textarea required class="form-control" rows="3" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label required class="control-label">Report Code <star>*</star></label>
+                <textarea class="form-control queristring" rows="3" name="querystring"></textarea>
+            </div>
+            <div class="category"><star>*</star> Required fields</div>
+            <form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary create" >Create</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $(document).on('click','.edit', function(){
+        var href = $(this).attr('data-location');
+        $('#myModal .modal-body').load(href,function(){
+            $('#myModal').modal({show:true});
+           // if(!$('.modal-footer .btn-primary')) {
+                $('#myModal .modal-footer').html('<button type="button" class="btn btn-primary">Submit</button><button type="button" class="btn btn-secondary cls" data-dismiss="modal">Close</button>');
+            //}
+        });
+    });
+
+    $(document).on('click','.run', function(){
+        var href = $(this).attr('data-location');
+        var query = $(this).attr('data-query');
+        var notify = message = query+ " Query Execution started at: "+ Date();
+        var type = "warning";
+        pushNotification(message, notify, type);
+        $('#runQuery').modal({show:true});
+        $('#runQuery .modal-body').load(href,function(){
+            
+        });
+        var query = $(this).attr('data-query');
+        var notify = message = query+ " Query Execution completed at: "+ Date();
+        var type = "success";
+        pushNotification(message, notify, type);
+    });
+
+    $(document).on('click','.cls', function(){
+        if (!$('.ref').length){
+            $('#runQuery .modal-body').html('<i class="fa fa-refresh fa-2x fa-fw fa-spin ref"></i>');
+        }
+    });
+
+    $(document).on('click','.view', function(){
+        var href = $(this).attr('data-location');
+        $('#myModal .modal-body').load(href,function(){
+            $('#myModal').modal({show:true});
+            $('#myModal .btn-primary').remove();
+        });
+    });
+
+    $(document).on('click','.delete', function(){
+        var href = $(this).attr('data-location');
+        var query = $(this).attr('data-query');
+        if (confirm("Do You want to delete this query?")) {
+            var message = query+" Query deletion started at: " + Date();
+            var type = "warning";
+            pushNotification(message, message, type);
+            var error = false;
+            $.ajax({
+              url:href,
+              type:"get",
+              error:function(err){
+                    console.error(err);
+                error = true;
+              },
+              success:function(data){
+
+              },
+              complete:function(data){
+                var message = query+" Query deletion completed at: " + Date();
+                var type = "success";
+                if (error === true) {
+                  message = query+" Query deletion failed at: " + Date();
+                  type = "danger";  
+                }
+                pushNotification(message, message, type);
+                $('.close').click();
+                window.location.reload();
+            }
+
+        });
+        }
+    });
+
+    $(document).on('click', '.btn-primary', function(){
+        var form = document.getElementById("createQuery");
+        var query = $('.queristring').val();
+            var message = query+" Query save started at: " + Date();
+            var type = "warning";
+            pushNotification(message, message, type);
+            var error = false;
+            $.ajax({
+              url:"createquery",
+              data: new FormData(form),// the formData function is available in almost all new browsers.
+              type:"post",
+              contentType:false,
+              processData:false,
+              cache:false,
+              dataType:"json", // Change this according to your response from the server.
+              error:function(err){
+                console.error(err);
+                error = true;
+              },
+              success:function(data){
+
+              },
+              complete:function(data){
+                var message = query+" Query save completed at: " + Date();
+                var type = "success";
+                if (error === true) {
+                  message = query+" Query save failed at: " + Date();
+                  type = "danger";  
+                }
+                pushNotification(message, message, type);
+                $('.close').click();
+                window.location.reload();
+            }
+
+        });
+    });
+
+    $('.refresh').click(function(){
+        window.location.reload();
+    })
+        var $table = $('.table');
+        $table.bootstrapTable({
+	                toolbar: ".card-header",
+	                clickToSelect: false,
+	                showRefresh: false,
+	                search: false,
+	                showToggle: true,
+	                showColumns: true,
+	                pagination: true,
+	                searchAlign: 'left',
+	                pageSize: 4,
+	                clickToSelect: false,
+	                pageList: [4,6,8,10,25,50,100],
+
+	                formatShowingRows: function(pageFrom, pageTo, totalRows){
+	                    //do nothing here, we don't want to show the text "showing x of y from..."
+	                },
+	                formatRecordsPerPage: function(pageNumber){
+	                    return pageNumber + " rows visible";
+	                },
+                    onToggle: function(cardView) {
+                        $('.half-rc').toggleClass('hide');
+                        $('.full-rc').toggleClass('show');
+                    },
+	                icons: {
+	                    refresh: 'fa fa-refresh',
+	                    toggle: 'fa fa-th-list',
+	                    columns: 'fa fa-columns',
+	                    detailOpen: 'fa fa-plus-circle',
+	                    detailClose: 'ti-close'
+	                }
+	            });
+
+	            //activate the tooltips after the data table is initialized
+	            //$('[rel="tooltip"]').tooltip();
+
+	            $(window).resize(function () {
+	                $table.bootstrapTable('resetView');
+	            });
+});
+</script>

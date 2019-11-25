@@ -1,0 +1,42 @@
+need_update: 'yes'
+rdbms:
+    driver: pdo_mysql
+    host: docker_mysql
+    user: root
+    password: pcapi
+    dbname: hrms
+awsCredentials:
+    credentials:
+        key: AKIATUBDFHSP4LTO3VHA
+        secret: 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
+    region: us-east-2
+    version: latest
+    app_client_id: '1f8o0qgrglsd4hp040diac8b6s'
+    app_client_secret: 'qk6aq18qgslpl4775ht65sj1tnmrvegr1em1iu4phrurgn0do20'
+    user_pool_id: 'us-east-2_CWZnJpvtX'
+    accountId: '249181846687'
+    idPoolId: 'us-east-2:de2bbb85-5a5e-4c72-9477-fa09a60a32c4'
+    linkedLogins: 'cognito-idp.us-east-2.amazonaws.com/us-east-2_CWZnJpvtX'
+    roleArn: 'arn:aws:iam::249181846687:role/Cognito_test_s3_guestsUnauth_Role'
+S3:
+    bucket: oncloudtime-new
+    region: us-east-1
+    url: 'http://s3.amazonaws.com/oncloudtime'
+    version: latest
+    credentials: { key: AKIAI4RWKSIJV6KWMBWA, secret: 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 }
+    sse: AES256
+athena:
+    directory: athena/
+    input: 's3://OnCloudTime/'
+    output: 's3://OnCloudTime/athena-output'
+    database: oncloudtime
+sqs:
+    notificationQueue: 'https://sqs.us-east-1.amazonaws.com/508451391542/notifications'
+shell:
+    emrCreateFile: /var/www/html/oncloudtime/app/shell/createEMR.sh
+    emrStartFile: /var/www/html/oncloudtime/app/shell/startEMR.sh
+    emrStopFile: /var/www/html/oncloudtime/app/shell/stopEMR.sh
+    orcConversion: /var/www/html/oncloudtime/app/shell/orcConversion.sh
+    parquetConversion: /var/www/html/oncloudtime/app/shell/parquetConversion.sh
+    runQueryShell: /var/www/html/oncloudtime/app/shell/runQuery.sh
+

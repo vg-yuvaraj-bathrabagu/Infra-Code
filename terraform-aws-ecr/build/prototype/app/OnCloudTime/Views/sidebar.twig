@@ -1,0 +1,96 @@
+<div class="sidebar" data-background-color="brown" data-active-color="danger">
+        <!--
+            Tip 1: you can change the color of the sidebar's background using: data-background-color="white | brown"
+            Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+        -->
+            <div class="logo">
+                <a href="startemr" class="simple-text logo-normal">
+                {# <img class="lg" src="../../assets/img/logo.png" /> #}
+                <span class="mar blu">On</span>Cloud<span class="blu">Time</span>
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <!--<li>
+                        <a href="#">
+                            <i class="ti-panel"></i>
+                            <p>Setup</p>
+                        </a>
+                    </li>-->
+                    <li>
+                        <a data-toggle="collapse" href="#setup">
+                            <i class="ti-panel"></i>
+                            <p>Setup<b class="caret"></b></p>
+                        </a>
+                        <div class="collapse" id="setup">
+                            <ul class="nav">
+                                <li>
+                                    <a href="users" class="users">
+                                        <i class="ti-user"></i>
+                                        <span class="sidebar-normal">Users</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="permissions" class="permissions">
+                                        <i class="ti-settings"></i>
+                                        <span class="sidebar-normal">Permissions</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="dashboard" class="dashboard">
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="startemr" class="startemr">
+                            <i class="fa fa-server"></i>
+                            <p>EMR</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="upload" class="upload">
+                            <i class="fa fa-cloud"></i>
+                            <p>S3</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="sqs" class="sqs">
+                            <i class="fa fa-inbox"></i>
+                            <p>SQS</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#report">
+                            <p>Reports
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="report">
+                            <ul class="nav">
+                                <!--<li>
+                                    <a href="tables" class="tables">
+                                        <i class="ti-plus"></i>
+                                        <span class="sidebar-normal">Create Table</span>
+                                    </a>
+                                </li>-->
+                                <li>
+                                    <a href="tables" class="tables">
+                                        <i class="fa fa-table"></i>
+                                        <span class="sidebar-normal">Tables</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="queries" class="queries">
+                                        <i class="fa fa-database"></i>
+                                        <span class="sidebar-normal">Queries</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>

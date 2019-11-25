@@ -1,0 +1,83 @@
+<form id="createUser">
+            <div class="form-group">
+                            <label class="control-label" for="salutation">Employee</label>
+                            <div class="controls">
+                                <select name="employeeid" placeholder="" class="form-control">
+                                    {% for employee in employees %}
+                                         {% set selected = '' %}
+                                            {% if user.getEmployeeid() == employee.id %}
+                                                {% set selected = 'selected' %}
+                                            {% endif %}
+                                        <option value="{{employee.id}}" {{selected}}>{{employee.firstname}} {{employee.lastname}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div></div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Contract</label>
+                            <div class="controls">
+                                <input type="text" name="contract" value="{{user.getContract()}}" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Po Number</label>
+                            <div class="controls">
+                                <input type="text" name="ponumber" placeholder="" value="{{user.getPonumber()}}" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Task Code</label>
+                            <div class="controls">
+                                <input type="text" name="taskcode" placeholder="" maxlength="" value="{{user.getTaskcode()}}" class="form-control" />
+                            </div>
+                        </div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Job ID</label>
+                            <div class="controls">
+                                <input type="text" name="jobid" placeholder=""  class="form-control" value="{{user.getJobid()}}" />
+                            </div></div>
+                            <label class="control-label" for="email">BLC Code</label>
+                            <div class="controls">
+                                <input type="text" name="blccode" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Job Number</label>
+                            <div class="controls">
+                                <input type="text" name="jobnumber" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship Start Date</label>
+                            <div class="controls">
+                                <input type="text" name="relationshipstartdate" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Relationship End Date</label>
+                            <div class="controls">
+                                <input type="text" name="relationshipenddate" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Last Updated By</label>
+                            <div class="controls">
+                                <input type="text" name="lastupdatedby" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Last Updated date</label>
+                            <div class="controls">
+                                <input type="text" name="lastupdatedate" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Comment</label>
+                            <div class="controls">
+                                <input type="text" name="Comment" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Created BY</label>
+                            <div class="controls">
+                                <input type="text" name="createdby" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Date Created</label>
+                            <div class="controls">
+                                <input type="text" name="datecreated" placeholder=""  class="form-control" value="NA" />
+                            </div></div>
+            <div class="category"><star>*</star> Required fields</div>
+            <form>

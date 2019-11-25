@@ -1,0 +1,310 @@
+-
+    pattern: /
+    method: GET
+    defaults:
+        _controller: AuthenticationService
+        _method: loadIndex
+-
+    pattern: /login
+    method: GET
+    defaults:
+        _controller: AuthenticationService
+        _method: login
+        _view: login.twig
+-
+    pattern: /downloadmanager
+    method: GET
+    defaults:
+        _controller: S3Service
+        _method: downloadManager
+        _view: samplTree.twig
+-
+    pattern: /authenticate
+    method: POST
+    defaults:
+        _controller: AuthenticationService
+        _method: authenticate
+-
+    pattern: /reports
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: showReports
+        _renderView: true
+        _view: reports.twig
+-
+    pattern: /upload
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: showUploadForm
+        _view: upload.twig
+-
+    pattern: /processs3
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: processS3Upload
+-
+    pattern: /progress
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: getProgress
+-
+    pattern: /processemr
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: createEMR
+        _view: reports.twig
+-
+    pattern: /emr
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: loadEMR
+        _view: reports.twig
+-
+    pattern: /startemr
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: loadEMR
+        _view: emr.twig
+-
+    pattern: /uploads
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: manageUploads
+        _view: s3upload.twig
+-
+    pattern: /createtable
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: createTable
+-
+    pattern: /edittable
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: editTable
+        _view: createtable.twig
+-
+    pattern: /saveuser
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: saveUser
+-
+    pattern: /edituser
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: editUser
+        _view: App:Reports:Model:Employee:createuser.twig
+-
+    pattern: /deleteuser
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: deleteUser
+-
+    pattern: /savepermission
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: savePermission
+-
+    pattern: /editpermission
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: editPermission
+        _view: App:Reports:Model:Employeerelationship:permissions.twig
+-
+    pattern: /deletepermission
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: deletePermission
+-
+    pattern: /getquerystatus
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: getQueryStatus
+-
+    pattern: /stopemr
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: stopEmr
+        _view: reports.twig
+-
+    pattern: /logout
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: logOut
+-
+    pattern: /athenafiles
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: athenaFolder
+-
+    pattern: /loadTree
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: loadAthenaTree
+        _view: tree.twig
+-
+    pattern: /copy
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: copyBetweenFolders
+-
+    pattern: /createtable
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: showAthenaDirectories
+        _view: createtable.twig
+-
+    pattern: /tables
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: showTables
+        _view: tables.twig
+-
+    pattern: /listtables
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: listTables
+        _view: listtables.twig
+-
+    pattern: /createquery
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: saveQuery
+-
+    pattern: /queries
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: getAllQueries
+        _view: queries.twig
+-
+    pattern: /editquery
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: editQuery
+        _view: editquery.twig
+-
+    pattern: /viewquery
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: editQuery
+        _view: viewquery.twig
+-
+    pattern: /deletequery
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: deleteQuery
+-
+    pattern: /copyorc
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: copyORC
+-
+    pattern: /copypar
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: copyParquet
+-
+    pattern: /deletes3
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: deleteObject
+-
+    pattern: /sqslist
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: viewSQS
+        _view: sqslist.twig
+-
+    pattern: /sqs
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: loadViewSQS
+        _view: sqs.twig
+-
+    pattern: /notifications
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: getNotifications
+-
+    pattern: /startemrid
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: startEMR
+        _view: reports.twig
+-
+    pattern: /pushnotification
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: pushNotification
+-
+    pattern: /install
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: loadConfig
+        _view: install.twig
+-
+    pattern: /updateconfig
+    method: POST
+    defaults:
+        _controller: ReportService
+        _method: updateConfig
+-
+    pattern: /users
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: getUsers
+        _view: users.twig
+-
+    pattern: /permissions
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: getPermissions
+        _view: permissions.twig
+-
+    pattern: /runquery
+    method: GET
+    defaults:
+        _controller: ReportService
+        _method: runQuery
+        _view: queryresults.twig
+

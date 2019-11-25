@@ -1,0 +1,23 @@
+<form id="editTableForm">
+            <div class="form-group">
+                <label class="control-label">Folders <star>*</star></label>
+                <select required name="type" class="form-control folders-edit">
+                    <option value="">----</option>
+                    {% for report in customReports %}
+                        <option value="{{report.Prefix}}">{{report.Prefix}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Table Name<star>*</star></label>
+                <input class="form-control tablename" type="text" name="tablename" value="{{tables.table}}" />
+                <input type="hidden" value="{{tables.table}}" name="oldtable" class="oldtable" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Column Definition <star>*</star></label>
+                <textarea placeholder="Provide coma sperated column names with datatype. (eg: surname STRING,firstname STRING)" required class="form-control columns" rows="5" name="description">
+                    {{tables.definition}}
+                </textarea>
+            </div>
+            <div class="category"><star>*</star> Required fields</div>
+            <form>

@@ -1,0 +1,245 @@
+{{ include('header.twig') }}
+	<div class="wrapper">
+		{{ include('sidebar.twig') }}
+
+	    <div class="main-panel">
+			{{ include('top-nav.twig') }}
+
+	        <div class="content">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-md-12">
+	                        <div class="card">
+	                        	<div class="card-content">
+	                        		{{ include('search.twig') }}
+	                        		<div class="pull-right">
+	                        			<div class="row text-center">
+	                            			<a class="icon-big btn btn-info btn-simple" href="#" data-target="#myModal" data-toggle="modal">
+	                            			<i class="fa fa-plus">
+	                            			</i></a>
+	                            		</div>
+	                            		<div class="row">
+	                            			<a class="numbers btn btn-info btn-simple" href="javascript:void(0)" data-target="#myModal" data-toggle="modal">
+	                            			Create EMR</a>
+	                            		</div>
+	                        		</div>
+	                            	<div class="clearfix"></div>
+	                        	</div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-12">
+	                    	<div class="refresh-big hide text-center">
+                              <i class="fa fa-refresh fa-5x fa-spin refresh-big text-center"></i>
+                            </div>
+	                    	<div class="tablecontent">
+	                            	{{ include('reports.twig') }}
+	                       	</div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <form id="emrform" action="" method="" novalidate="">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Start New EMR</h4>
+            </div>
+            <div class="modal-body">
+
+                                    <div class="card-content emr-form">
+                                    <div class="progress" style="display: none;">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                            <span class="sr-only">60% Complete</span>
+                                        </div>
+                                    </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Nodes <star>*</star></label>
+                                            <input class="form-control"
+                                                   name="nodes"
+                                                   id="file"
+                                                   type="text"
+                                                   required="true"
+
+                                            />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Category <star>*</star></label>
+                                            <input class="form-control"
+                                                   name="category"
+                                                   id="file"
+                                                   type="text"
+                                                   required="true"
+
+                                            />
+                                        </div>
+                                        <div class="category"><star>*</star> Required fields</div>
+                                    </div>
+                                    <div class="card-footer">
+
+                                        <div class="clearfix"></div>
+                                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            	<button type="submit" class="btn btn-primary submit">Start</button>
+            </div>
+        </div>
+	</form>
+    </div>
+</div>
+            {{ include('footer.twig') }}
+
+
+
+    <script type="text/javascript">
+        $().ready(function(){
+            $('.small-ref').click(function(){
+                $('.refresh i').addClass("fa-spin");
+                $.ajax({
+				  url:"emr",
+				  type:"get",
+				  dataType:"html", // Change this according to your response from the server.
+				  error:function(err){
+			         error = true;
+				  },
+				  success:function(data){
+                  },
+                  complete:function(data){
+  				  	$('.tablecontent i').removeClass("fa-spin");
+                        if (error !== true) {
+                            $('.tablecontent').html(data.responseText);
+                        }
+                    },
+        		});
+            });
+        	$('#emrform').submit(function( event ) {
+                var vals = $(this).serializeArray();
+                var notify = message = "EMR "+ JSON.stringify(vals) +"  Creation started at:" + Date();
+                var type = "warning";
+                
+                pushNotification(message, notify, type);
+        		$('.refresh i').addClass("fa-spin");
+        		var form = document.getElementById("emrform");
+                var error = false;
+        		$.ajax({
+				  url:"processemr",
+				  data: new FormData(form),// the formData function is available in almost all new browsers.
+				  type:"post",
+				  contentType:false,
+				  processData:false,
+				  cache:false,
+				  dataType:"html", // Change this according to your response from the server.
+				  error:function(err){
+			         error = true;
+				  },
+				  success:function(data){
+
+                  },
+                  complete:function(data){
+                    var notify = message = "EMR "+ JSON.stringify(vals) +" created at: "+Date();
+                    var type = "success";
+                    if (error === true) {
+                        notify = message = "EMR "+ JSON.stringify(vals) +" creation failed at: "+Date();
+                        type = "danger";
+                    }
+                    pushNotification(message, notify, type);
+  				  	$('.btn-secondary').click()
+  				  	$('.tablecontent i').removeClass("fa-spin");
+                        if (error !== true) {
+                            $('.tablecontent').html(data.responseText);
+                        }
+
+        		  },
+        		  });
+        		event.preventDefault();
+
+        	});
+
+        	$('.toggle').click(function(){
+        		$('.emr-form').toggle('1000');
+        		$('.submit').toggle('1000')
+    			$("i", this).toggleClass("fa fa-caret-square-o-up fa fa-caret-square-o-down");
+        	});
+			//console.log($('#registerFormValidation').validate());
+			$(document).on('click', '.start', function() {
+				var id = $(this).attr('data-id');
+                var cat = $(this).attr('data-cat');
+                var error = false;
+                var notify = message = "EMR "+cat+" Start started at: "+ Date();
+                var type = "warning";
+                pushNotification(message, notify, type);
+                    $('.tablecontent i').addClass("fa-spin");
+                    $.ajax({
+                        url: "startemrid",
+                        data: {'id': id },
+                        type: 'post',
+                        // Change this according to your response from the server.
+                      error:function(err){
+                        error = true;
+                      },
+                      success:function(data){
+                      },
+                      complete:function(data){
+                        var notify = message = "EMR "+cat+" Started at: "+ Date();
+                        var type = "success";
+                        if (error === true) {
+                            notify = message = "EMR "+cat+" start failed at: "+ Date();
+                            type = "danger";
+                        }
+                        pushNotification(message, notify, type);
+                        $('.tablecontent i').removeClass("fa-spin");
+                        if (error !== true) {
+                            $('.tablecontent').html(data.responseText);
+                        }
+
+                      },
+                    });
+			});
+
+			$(document).on('click', '.stop', function() {
+				if(confirm("Do You want to stop this EMR ?")) {
+                    var cat = $(this).attr('data-cat');
+                    var notify = message = "EMR "+cat+" Stop started at:" + Date();
+                    var type = "warning";
+                    pushNotification(message, notify, type);
+                    var id = $(this).attr('data-id');
+                    var error = false;
+					$('.tablecontent i').addClass("fa-spin");
+					$.ajax({
+						url: "stopemr",
+						data: {'id': id },
+						type: 'post',
+    			  		// Change this according to your response from the server.
+					  error:function(err){
+				        error = true;
+					  },
+					  success:function(data){
+
+                      },
+                      complete:function(data){
+                        var notify = message = "EMR "+cat+" Stopped at: "+ Date();
+                        var type = "success";
+                        if (error === true) {
+                            notify = message = "EMR "+cat+" Stop failed at: "+Date();
+                            type = "danger";
+                        }
+                        pushNotification(message, notify, type);
+	  				  	$('.tablecontent i').removeClass("fa-spin");
+                        if (error !== true) {
+                            $('.tablecontent').html(data.responseText);
+                        }
+
+	        		  },
+					});
+
+				}
+			});
+        });
+
+    </script>
+

@@ -1,0 +1,44 @@
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Tables</h4>
+        <a class="refresh pull-right" href="javascript:void(0);">
+            <i class="fa fa-refresh fa-2x fa-fw"></i>
+        </a>
+        <br />
+    </div>
+    <div class="card-content">
+        <div class="table-responsive">
+            <table class="table header-fixed">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Tables</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set increment = 0 %}
+
+                    {% for row in Rows %}
+                        {% for data in row.Data %}
+                            {% set increment = increment + 1 %}
+                    <tr>
+
+                        <td>
+                            <a href="javascript:void(0);" class="table-edit" title="Edit Table" data-location="edittable?table={{data.VarCharValue}}">
+                                <i class="ti-pencil" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" title="Clone Table"><i class="fa fa-clone" aria-hidden="true"></i></a>
+                        </td>
+                        <td>
+                            {{ data.VarCharValue }}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div><!--  end card  -->

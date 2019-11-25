@@ -1,0 +1,327 @@
+<div class="modal fade" id="createUserModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">User</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="row">
+	                    <div class="col-md-8 col-md-offset-2">
+	                        <div class="card card-wizard" id="wizardCard">
+	                            <form id="createuser">
+		                            <div class="card-header text-center">
+		                                <h4 class="card-title">User</h4>
+		                            </div>
+	            					<div class="card-content">
+		            				    <ul class="nav">
+											<li><a href="#tab5" data-toggle="tab">General</a></li>
+		            						<li><a href="#tab1" data-toggle="tab">Contact Information</a></li>
+		            						<li><a href="#tab2" data-toggle="tab">Human Resource</a></li>
+		            						<li><a href="#tab3" data-toggle="tab">Payroll</a></li>
+                                            <li><a href="#tab4" data-toggle="tab">Assign Projects</a></li>
+                                            <li><a href="#tab6" data-toggle="tab">Emergency Contacts</a></li>
+                                            <li><a href="#tab7" data-toggle="tab">Employee Rates</a></li>
+                                            <li><a href="#tab8" data-toggle="tab">PT Relationship</a></li>
+		            					</ul>
+		            					<div class="tab-content">
+											<div class="tab-pane" id="tab5">
+		                                        
+		                                        <div class="row">
+													<div class="form-group">
+                            <label class="control-label" for="salutation">Salutation</label>
+                            <div class="controls">
+                                <select name="salutation" placeholder="" class="form-control"  />
+                                    <option value="all">All</option>
+                                    <option value="dr">Dr</option>
+                                    <option value="miss">Miss</option>
+                                    <option value="mr">Mr</option>
+                                    <option value="mrs">Mrs</option>
+                                    <option value="ms">Ms</option>
+                                    <option value="minor">Minor</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div></div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">First Name</label>
+                            <div class="controls">
+                                <input type="text" name="firstname" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="last-name">Last Name</label>
+                            <div class="controls">
+                              <input type="text" name="lastname" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="first-name">Username</label>
+                            <div class="controls">
+                                <input type="text" name="username" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Password</label>
+                            <div class="controls">
+                                <input type="password" name="password" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Email</label>
+                            <div class="controls">
+                                <input type="email" name="email" placeholder=""  class="form-control" />
+                            </div></div>
+		                                        </div>
+		            					    </div>
+		            					    <div class="tab-pane" id="tab1">
+		                                        <h5 class="text-center">Provide the configurations by completing this wizard.</h5>
+		                                        <div class="row">
+		                                            <div class="col-md-5 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Host Name<star>*</star>
+															</label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="db_host"
+                                                                   required="true"
+                                                                   value={{config.rdbms.host}}
+															/>
+		                                                </div>
+		                                            </div>
+                                                    <div class="col-md-5">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Database<star>*</star>
+															</label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="db_dbname"
+                                                                   required="true"
+                                                                   value={{config.rdbms.dbname}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row">
+                                                    <div class="col-md-5 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Username<star>*</star>
+															</label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="db_user"
+		                                                           required="true"
+                                                                   value={{config.rdbms.user}}
+															/>
+		                                                </div>
+		                                            </div>
+                                                    <div class="col-md-5">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Password<star>*</star>
+															</label>
+		                                                    <input class="form-control"
+		                                                           type="password"
+		                                                           name="db_password"
+                                                                   required="true"
+                                                                   value={{config.rdbms.password}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		            					    </div>
+		            					    <div class="tab-pane" id="tab2">
+                                                <h5 class="text-center">Provide the configurations by completing this wizard.</h5>
+		                                        <div class="row">
+		                                            <div class="col-md-5 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+                                                                Key<star>*</star>
+                                                            </label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="s3_key"
+		                                                           required="true"
+                                                                   value={{config.S3.credentials.key}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-md-5">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Secret<star>*</star>
+															</label>
+		                                                    <!--     IMPORTANT! - the "bootstrap select picker" is not compatible with jquery.validation.js, that's why we use the "default select" inside this wizard. We will try to contact the guys who are responsibble for the "bootstrap select picker" to find a solution. Thank you for your patience.
+		                                                     -->
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="s3_secret"
+		                                                           required="true"
+                                                                   value={{config.S3.credentials.secret}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row">
+		                                            <div class="col-md-10 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Bucket<star>*</star>
+															</label>
+		                                                    <!--     IMPORTANT! - the "bootstrap select picker" is not compatible with jquery.validation.js, that's why we use the "default select" inside this wizard. We will try to contact the guys who are responsibble for the "bootstrap select picker" to find a solution. Thank you for your patience.
+		                                                     -->
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="s3_bucket"
+		                                                           required="true"
+                                                                   value={{config.S3.bucket}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		            					    </div>
+		            						<div class="tab-pane" id="tab3">
+                                                <h5 class="text-center">Provide the configurations by completing this wizard.</h5>
+												<p class="text-center">Please start the athena service before completing this wizrd in AWS.</p>
+		            							<div class="row">
+		                                            <div class="col-md-5 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+                                                                Athena Directory<star>*</star>
+                                                            </label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="athena_dir"
+		                                                           required="true"
+                                                                   value={{config.athena.directory}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-md-5">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+																Database<star>*</star>
+															</label>
+		                                                    <!--     IMPORTANT! - the "bootstrap select picker" is not compatible with jquery.validation.js, that's why we use the "default select" inside this wizard. We will try to contact the guys who are responsibble for the "bootstrap select picker" to find a solution. Thank you for your patience.
+		                                                     -->
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="athena_db"
+		                                                           required="true"
+                                                                   value={{config.athena.database}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		            					    </div>
+                                            <div class="tab-pane" id="tab4">
+                                                <h5 class="text-center">Provide the configurations by completing this wizard.</h5>
+												<p class="text-center">Get the queue url from created sqs queue in AWS</p>
+		            							<div class="row">
+		                                            <div class="col-md-10 col-md-offset-1">
+		                                                <div class="form-group">
+		                                                    <label class="control-label">
+                                                                Queue URL<star>*</star>
+                                                            </label>
+		                                                    <input class="form-control"
+		                                                           type="text"
+		                                                           name="sqs_queue"
+		                                                           required="true"
+                                                                   url="true"
+                                                                   value={{config.sqs.notificationQueue}}
+															/>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		            					    </div>
+		            					</div>
+	            					</div>
+		            				<div class="card-footer">
+		                                <button type="button" class="btn btn-default btn-fill btn-wd btn-back pull-left">Back</button>
+		                                <button type="button" class="btn btn-info btn-fill btn-wd btn-next pull-right">Next</button>
+		                                <button type="button" class="finish btn btn-info btn-fill btn-wd btn-finish pull-right" >Finish</button>
+		                                <div class="clearfix"></div>
+		            				</div>
+	                        	</form>
+	                    	</div>
+	                	</div>
+	            	</div>
+
+
+<div class="modal-body">
+<form id="createUser">
+    <div class="row">
+	    <div class="card">
+            <div class="card-content">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+                            <li><a href="#profile" data-toggle="tab">Profile</a></li>
+                            <li><a href="#messages" data-toggle="tab">Messages</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="my-tab-content" class="tab-content text-center">
+                    <div class="tab-pane active" id="home">
+                        <div class="form-group">
+                            <label class="control-label" for="salutation">Salutation</label>
+                            <div class="controls">
+                                <select name="salutation" placeholder="" class="form-control"  />
+                                    <option value="all">All</option>
+                                    <option value="dr">Dr</option>
+                                    <option value="miss">Miss</option>
+                                    <option value="mr">Mr</option>
+                                    <option value="mrs">Mrs</option>
+                                    <option value="ms">Ms</option>
+                                    <option value="minor">Minor</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div></div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">First Name</label>
+                            <div class="controls">
+                                <input type="text" name="firstname" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="last-name">Last Name</label>
+                            <div class="controls">
+                              <input type="text" name="lastname" placeholder=""  class="form-control" />
+                            </div></div>
+                            <div class="form-group">
+                            <label class="control-label" for="first-name">Username</label>
+                            <div class="controls">
+                                <input type="text" name="username" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="first-name">Password</label>
+                            <div class="controls">
+                                <input type="password" name="password" placeholder="" maxlength="" class="form-control" />
+                            </div>
+                        </div>
+                            <div class="form-group">
+                            <label class="control-label" for="email">Email</label>
+                            <div class="controls">
+                                <input type="email" name="email" placeholder=""  class="form-control" />
+                            </div></div>
+                        <div class="category"><star>*</star> Required fields</div>
+                    </div>
+                    <div class="tab-pane" id="profile">
+                        <p>Here is your profile.</p>
+                    </div>
+                    <div class="tab-pane" id="messages">
+                        <p>Here are your messages.</p>
+                    </div>
+                </div>
+	        </div>
+        </div>
+    </div>
+    </form>
+</div>
